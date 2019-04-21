@@ -36,12 +36,13 @@ class Node:
 	def create_child(self):
 		x, y = self.find_blank(self.data)
 		child = []
-		value = [(x, y-1), (x-1, y), (x+1, y), (x, y+1)]
+		value = [(x, y-1),(x, y+1),(x-1, y),(x+1, y)]
 		for i in value:
 			swap1 = self.swap1(self.data,x,y,i[0],i[1])
 			if swap1 is not None:
 				child_nade = Node(swap1, 0,self.level+1)
 				child.append(child_nade)
+
 		return child
 
 class puzzle:
@@ -49,7 +50,14 @@ class puzzle:
 	def __init__(self, mat_size):
 		self.l = mat_size
 		self.open1 = []
-		self.closed = []
+		self.closed1 = []
+		self.visited_node_data1 = []
+		self.open2 = []
+		self.closed2 = []
+		self.visited_node_data2 = []
+		self.open3 = []
+		self.closed3 = []
+		self.visited_node_data3 = []
 
 	def huristic1(self, initial, goal):             # misplaced pile
 		
@@ -125,10 +133,12 @@ class puzzle:
 		start.f_val = self.h1f(start, goal)
 		self.open1.append(start)
 		count = 0
-		while True:
+		cur = self.open1[0]
+		
+		while self.huristic1(cur.data, goal) != 0 :
 			
-			cur = self.open1[0]
-			self.open1 = []
+			
+			#self.open1 = []
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
@@ -138,31 +148,42 @@ class puzzle:
 			print(" | ")
 			print(" | ")
 			print("\\\'/ \n")
-			
+		
 			for k in cur.create_child():
-				k.f_val = self.h1f(k, goal)
-				self.open1.append(k)
-				count += 1
-			self.closed.append(cur)
-			if cur in self.open1:
-				del self.open1[0]
+
+				if k.data not in self.visited_node_data1:
+					k.f_val = self.h1f(k, goal)
+					self.open1.append(k)
+			self.closed1.append(cur)
+			self.visited_node_data1.append(cur.data)
+			count += 1
+			#if cur in self.open1:
+			del self.open1[0]
 			self.open1.sort(key = lambda x: x.f_val, reverse = False)
-			if count <= 31:
+			cur = self.open1[0]
+			if count <= 100:
 				continue
 			else:
-				print("Sorry no solution found: ")
+				print("Sorry no solution found..we reached leaf node: ")
 				break
+		for i in cur.data:
+			for j in i:
+				print(j, end=" ")
+		print("\nprocess1 number of moves:%s" %(count))
+		
 	def process2(self, initial, goal):
 		print("\n heuristic2 Manhattan distance method: \n")
-	
+
 		start = Node(initial, 0, 0)
 		start.f_val = self.h2f(start, goal)
-		self.open1.append(start)
+		self.open2.append(start)
 		count = 0
-		while True:
+		cur = self.open2[0]
+		
+		while self.huristic2(cur.data, goal) != 0 :
 			
-			cur = self.open1[0]
-			self.open1 = []
+			
+			#self.open1 = []
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
@@ -171,22 +192,29 @@ class puzzle:
 			print("\n")
 			print(" | ")
 			print(" | ")
-			print(" -- ")
 			print("\\\'/ \n")
-			
+		
 			for k in cur.create_child():
-				k.f_val = self.h2f(k, goal)
-				self.open1.append(k)
-				count += 1
-			self.closed.append(cur)
-			if cur in self.open1:
-				del self.open1[0]
-			self.open1.sort(key = lambda x: x.f_val, reverse = False)
-			if count <= 31:
+				if k.data not in self.visited_node_data2:
+					k.f_val = self.h2f(k, goal)
+					self.open2.append(k)
+			self.closed2.append(cur)
+			self.visited_node_data2.append(cur.data)
+			count += 1
+			#if cur in self.open1:
+			del self.open2[0]
+			self.open2.sort(key = lambda x: x.f_val, reverse = False)
+			cur = self.open2[0]
+			if count <= 100:
 				continue
 			else:
 				print("Sorry no solution found: ")
 				break
+		for i in cur.data:
+			for j in i:
+				print(j, end=" ")
+
+		print("\nprocess2 number of moves:%s" %(count))
 
 	def process3(self, initial, goal):
 
@@ -194,12 +222,12 @@ class puzzle:
 	
 		start = Node(initial, 0, 0)
 		start.f_val = self.h3f(start, goal)
-		self.open1.append(start)
+		self.open3.append(start)
 		count = 0
-		while True:
-			
-			cur = self.open1[0]
-			self.open1 = []
+		cur = self.open3[0]
+		
+		while self.huristic3(cur.data, goal) != 0 :
+			#self.open1 = []
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
@@ -208,22 +236,29 @@ class puzzle:
 			print("\n")
 			print(" | ")
 			print(" | ")
-			# print(" -- ")
 			print("\\\'/ \n")
-			
+		
 			for k in cur.create_child():
-				k.f_val = self.h3f(k, goal)
-				self.open1.append(k)
-				count += 1
-			self.closed.append(cur)
-			if cur in self.open1:
-				del self.open1[0]
-			self.open1.sort(key = lambda x: x.f_val, reverse = False)
-			if count <= 31:
+				if k.data not in self.visited_node_data3:
+					k.f_val = self.h3f(k, goal)
+					self.open3.append(k)
+			self.closed3.append(cur)
+			self.visited_node_data3.append(cur.data)
+			count += 1
+			#if cur in self.open1:
+			del self.open3[0]
+			self.open3.sort(key = lambda x: x.f_val, reverse = False)
+			cur = self.open3[0]
+			if count <= 100:
 				continue
 			else:
-				print("Sorry no solution found: ")
+				print("Sorry no solution found..: ")
 				break
+		for i in cur.data:
+			for j in i:
+				print(j, end=" ")
+		print("\nprocess3 number of moves:%s" %(count))
+		
 
 def main():
 	
@@ -238,6 +273,7 @@ def main():
 
 	print("Initial Matrix: %s" %(initial))
 	print("\nGoal Matrix: %s" %(goal))
+
 	start_time = datetime.datetime.now()
 	p.process1(initial,goal)
 	finish_time = datetime.datetime.now()
