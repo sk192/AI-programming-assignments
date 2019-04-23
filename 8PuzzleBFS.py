@@ -1,4 +1,4 @@
-# 8 Puzzle problem using Best First Search using 3 heuristic methods: 1) Misplaced tiles 2) Manhattan distance 3) Composite. 
+# 8 and 15 Puzzle problem using Best First Search using 3 heuristic methods: 1) Misplaced tiles 2) Manhattan distance 3) Composite. 
 # Input: Enter the initial matrx elements row wise seperated by space. Enter each row in new line. Same for entering goal matrix.
 
 
@@ -23,7 +23,7 @@ class Node:
 				else:
 					continue
 		
-	def swap1(self,initial, x1,y1, x2, y2):					# Swap the blank space with neighbour pile to create child node. 
+	def swap1(self,initial, x1,y1, x2, y2):					# Swap the blank space with neighbour tile to create child node. 
 		if x2 >= 0 and x2 < len(self.data) and y2 < len(self.data) and y2 >= 0:
 			temp =[]
 			duplicate_data = copy.deepcopy(initial)
@@ -60,7 +60,7 @@ class puzzle:
 		self.visited_node_data2 = []
 		self.visited_node_data3 = []
 
-	def huristic1(self, initial, goal):             # misplaced pile heuristic
+	def huristic1(self, initial, goal):             # misplaced tile heuristic
 		
 		h = 0
 		for i in range(self.l):
@@ -110,7 +110,7 @@ class puzzle:
 	def h3f(self,start,goal):
 		return self.huristic3(start.data, goal)
 
-	def process1(self, initial, goal):							# Process to solve 8 puzzle problem using misplaced pile heuristic
+	def process1(self, initial, goal):							# Process to solve 8 puzzle problem using misplaced ptileile heuristic
 
 		print("\n Heusristic1: misplaced tiles method \n")
 		start = Node(initial, 0, 0)								# Initial node with level 0 and f value 0
@@ -230,13 +230,13 @@ class puzzle:
 		print("\n\nHeuristic3 number of moves : %s" %(count))
 
 def main():
-	
-	p = puzzle(3)
+	n = int(input("Enter number: 3 for 8puzzle (3 * 3 matrix) or 4 for 15puzzle (4 * 4 matrix): "))
+	p = puzzle(n)
 	initial = []
 	goal = [] 
-	for i in range(3):
+	for i in range(n):
 		initial.append(input("enter initial matrix: ").split(" "))
-	for j in range(3):
+	for j in range(n):
 		goal.append(input("enter goal matrix: ").split(" "))
 	print("\n8 Puzzle problem using Best First Search algorithm: \n")
 
