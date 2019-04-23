@@ -112,7 +112,7 @@ class puzzle:
 
 	def process1(self, initial, goal):							# Process to solve 8 puzzle problem using misplaced pile heuristic
 
-		print("\n heusristic 1 misplaced tiles method \n")
+		print("\n Heusristic1: misplaced tiles method \n")
 		start = Node(initial, 0, 0)								# Initial node with level 0 and f value 0
 		start.f_val = self.h1f(start, goal)
 		self.open1.append(start)
@@ -139,18 +139,18 @@ class puzzle:
 			self.closed1.append(cur)							# add visited node in closed1
 			self.visited_node_data1.append(cur.data)
 			count += 1
-			#if cur in self.open1:
-			del self.open1[0]								# delete visited node from open1 and add to closed1.
-			self.open1.sort(key = lambda x: x.f_val, reverse = False)
+			if cur in self.open1:
+				del self.open1[0]								# delete visited node from open1 and add to closed1.
+			self.open1.sort(key = lambda x: x.f_val, reverse = False)			# sort the array by f_value
 			if count <= 100 and len(self.open1) != 0:			# maximum move limit 100
 				continue
 			else:
 				print("Sorry no solution found: ")				
 				break
-		print("\nheuristic1 number of moves: %s" %(count))
+		print("\n\nHeuristic1 number of moves: %s" %(count))
 
 	def process2(self, initial, goal):						    #  Process to solve 8 puzzle problem using manhattan distance heuristic
-		print("\n heuristic2 Manhattan distance method \n")
+		print("\nHeuristic2: Manhattan distance method \n")
 	
 		start = Node(initial, 0, 0)
 		start.f_val = self.h2f(start, goal)
@@ -181,17 +181,17 @@ class puzzle:
 			count += 1
 			if cur in self.open2:
 				del self.open2[0]
-			self.open2.sort(key = lambda x: x.f_val, reverse = False)
+			self.open2.sort(key = lambda x: x.f_val, reverse = False)		# sort the array by f_value
 			if count <= 100 and len(self.open2) != 0:
 				continue
 			else:
 				print("Sorry no solution found: ")
 				break
-		print("\nHeuristic2 number of moves: %s" %(count))
+		print("\n\nHeuristic2 number of moves: %s" %(count))
 
 	def process3(self, initial, goal):							 # Process to solve 8 puzzle problem using composite heuristic
 
-		print("\n Heuristic3: Composite method \n ")
+		print("\nHeuristic3: Composite method \n ")
 	
 		start = Node(initial, 0, 0)
 		start.f_val = self.h3f(start, goal)
@@ -209,7 +209,6 @@ class puzzle:
 			print("\n")
 			print(" | ")
 			print(" | ")
-			# print(" -- ")
 			print("\\\'/ \n")
 			
 			for k in cur.create_child():
@@ -222,13 +221,13 @@ class puzzle:
 			count += 1
 			if cur in self.open3:
 				del self.open3[0]
-			self.open3.sort(key = lambda x: x.f_val, reverse = False)
+			self.open3.sort(key = lambda x: x.f_val, reverse = False)			# sort the array by f_value
 			if count <= 100 and len(self.open3) != 0:
 				continue
 			else:
 				print("\nSorry no solution found: ")
 				break
-		print("\nHeuristic3 number of moves : %s" %(count))
+		print("\n\nHeuristic3 number of moves : %s" %(count))
 
 def main():
 	
@@ -246,18 +245,18 @@ def main():
 	start_time = datetime.datetime.now()
 	p.process1(initial,goal)
 	finish_time = datetime.datetime.now()
-	print("\n\nprocess1 execution time: %s" %(finish_time - start_time))
+	print("\nexecution time using heuristic1 method: %s" %(finish_time - start_time))
 
 	start_time = datetime.datetime.now()
 	p.process2(initial,goal)
 	finish_time = datetime.datetime.now()
-	print("\n\nprocess2 execution time: %s" %(finish_time - start_time ))
+	print("\nexecution time using heuristic2 method: %s" %(finish_time - start_time ))
 
 
 	start_time = datetime.datetime.now()
 	p.process3(initial, goal)
 	finish_time = datetime.datetime.now()
-	print("\n\nprocess3 execution time: %s" %(finish_time - start_time))
+	print("\nexecution time using heuristic3 method: %s" %(finish_time - start_time))
 
 if __name__ == '__main__':
 	main()
