@@ -95,27 +95,30 @@ class puzzle:
 		return sum(sum2)
 	
 	def huristic3(self, initial, goal):			# Euclidean distance
-		sum3 = []
-		initial_dict = {}
-		goal_dict = {}
-		for i in range(self.l):
-			for j in range(self.l):
-				key = initial[i][j]
-				value = (i,j)
-				key1 = goal[i][j]
-				value1 = (i,j)
-				initial_dict[key] = value
-				goal_dict[key1] = value1
-		for key in initial_dict:
-			if key in goal_dict:
-				x2 = goal_dict[key][0]
-				y2 = goal_dict[key][1]
-			x1 = initial_dict[key][0]
-			y1 = initial_dict[key][1]
-			sum1 = math.sqrt(abs((x1 - x2)^2 + (y1 - y2)^2))
-			sum3.append(sum1)
-		return sum(sum3)
-
+		# sum3 = []
+		# initial_dict = {}
+		# goal_dict = {}
+		# for i in range(self.l):
+		# 	for j in range(self.l):
+		# 		key = initial[i][j]
+		# 		value = (i,j)
+		# 		key1 = goal[i][j]
+		# 		value1 = (i,j)
+		# 		initial_dict[key] = value
+		# 		goal_dict[key1] = value1
+		# for key in initial_dict:
+		# 	if key in goal_dict:
+		# 		x2 = goal_dict[key][0]
+		# 		y2 = goal_dict[key][1]
+		# 	x1 = initial_dict[key][0]
+		# 	y1 = initial_dict[key][1]
+		# 	sum1 = math.sqrt(abs((x1 - x2)^2 + (y1 - y2)^2))
+		# 	sum3.append(sum1)
+		# return sum(sum3)
+		h1 = self.huristic1(initial,goal)
+		h2 = self.huristic2(initial,goal)
+		composite = max(h1,h2)
+		return composite
 
 
 	def h1f(self,start,goal):
