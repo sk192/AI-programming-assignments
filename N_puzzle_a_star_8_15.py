@@ -126,8 +126,8 @@ class puzzle:
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
-			if self.huristic1(cur.data, goal) == 0:
-				break
+			# if self.huristic1(cur.data, goal) == 0:
+			# 	break
 			print("\n")
 			print(" | ")
 			print(" | ")
@@ -167,8 +167,8 @@ class puzzle:
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
-			if self.huristic2(cur.data, goal) == 0:
-				break
+			# if self.huristic2(cur.data, goal) == 0:
+			# 	break
 			print("\n")
 			print(" | ")
 			print(" | ")
@@ -208,8 +208,8 @@ class puzzle:
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
-			if self.huristic3(cur.data, goal) == 0:
-				break
+			# if self.huristic3(cur.data, goal) == 0:
+			# 	break
 			print("\n")
 			print(" | ")
 			print(" | ")
