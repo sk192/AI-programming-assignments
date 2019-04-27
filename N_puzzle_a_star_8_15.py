@@ -122,12 +122,10 @@ class puzzle:
 		count = 0
 		cur = self.open1[0]
 		
-		while self.huristic1(cur.data, goal) != 0 :				# Once we find the goal matrix, break the while loop
+		while self.huristic1(cur.data, goal) != 0:				# Once we find the goal matrix, break the while loop
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
-			# if self.huristic1(cur.data, goal) == 0:
-			# 	break
 			print("\n")
 			print(" | ")
 			print(" | ")
@@ -167,8 +165,6 @@ class puzzle:
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
-			# if self.huristic2(cur.data, goal) == 0:
-			# 	break
 			print("\n")
 			print(" | ")
 			print(" | ")
@@ -208,8 +204,6 @@ class puzzle:
 			for i in cur.data:
 				for j in i:
 					print(j, end=" ")
-			# if self.huristic3(cur.data, goal) == 0:
-			# 	break
 			print("\n")
 			print(" | ")
 			print(" | ")
