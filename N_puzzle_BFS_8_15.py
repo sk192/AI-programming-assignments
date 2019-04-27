@@ -118,7 +118,6 @@ class puzzle:
 		self.open1.append(start)
 		count = 0
 		while True:									
-			
 			cur = self.open1[0]
 			self.open1 = []
 			for i in cur.data:
@@ -130,7 +129,6 @@ class puzzle:
 			print(" | ")
 			print(" | ")
 			print("\\\'/ \n")
-			
 			for k in cur.create_child():
 				if k.data not in self.visited_node_data1: 
 					k.f_val = self.h1f(k, goal)
@@ -157,7 +155,6 @@ class puzzle:
 		self.open2.append(start)
 		count = 0
 		while True:
-			
 			cur = self.open2[0]
 			self.open2 = []
 			for i in cur.data:
