@@ -1,6 +1,6 @@
 
 # 8 and 15 Puzzle using A* algorithm with 3 heuristic methods : 1) misplaced tile 2) Manhattan distance 3) Composite heuristic.
-# Input: Enter the initial matrx elements row wise seperated by space. Enter each row in new line. Enter blank space as b. Same for entering goal matrix
+# Input:  Enter 3 for 8puzzle or 4 for 15puzzle. Then enter the initial matrx elements row wise seperated by space. Enter each row in new line. Enter blank space as b. Same for entering goal matrix
 
 
 #!/usr/bin/python3.6
@@ -145,7 +145,7 @@ class puzzle:
 			if count <= 100:		# maximum move limit 100
 				continue
 			else:
-				print("Sorry no solution found..we reached leaf node: ")
+				print("Sorry no solution found..")
 				break
 		for i in cur.data:
 			for j in i:
@@ -183,7 +183,7 @@ class puzzle:
 			if count <= 100:
 				continue
 			else:
-				print("Sorry no solution found: ")
+				print("Sorry no solution found ")
 				break
 		for i in cur.data:
 			for j in i:
@@ -216,13 +216,13 @@ class puzzle:
 			self.closed3.append(cur)
 			self.visited_node_data3.append(cur.data)
 			count += 1
-			del self.open3[0]
+			del self.open3[0]											
 			self.open3.sort(key = lambda x: x.f_val, reverse = False)			# sort the array by f_value
 			cur = self.open3[0]
 			if count <= 100:
 				continue
 			else:
-				print("Sorry no solution found..: ")
+				print("Sorry no solution found.. ")
 				break
 		for i in cur.data:
 			for j in i:
