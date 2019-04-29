@@ -1,5 +1,5 @@
-# 8 and 15 Puzzle problem using Best First Search using 3 heuristic methods: 1) Misplaced tiles 2) Manhattan distance 3) Composite. 
-# Input: Enter the initial matrx elements row wise seperated by space. Enter each row in new line. Same for entering goal matrix.
+# 8 and 15 Puzzle problem using Best First Search with 3 heuristic methods: 1) Misplaced tiles 2) Manhattan distance 3) Composite heuristic. 
+# Input: Enter 3 for 8puzzle or 4 for 15puzzle. Then enter the initial matrx elements row wise seperated by space. Enter each row in new line. Same for entering goal matrix.
 
 
 #!/usr/bin/python3.6
@@ -140,7 +140,7 @@ class puzzle:
 			if cur in self.open1:
 				del self.open1[0]								# delete visited node from open1 and add to closed1.
 			self.open1.sort(key = lambda x: x.f_val, reverse = False)			# sort the array by f_value
-			if count <= 100 and len(self.open1) != 0:			# maximum move limit 100
+			if count <= 1000 and len(self.open1) != 0:			# maximum move limit 100
 				continue
 			else:
 				print("Sorry no solution found: ")				
@@ -179,7 +179,7 @@ class puzzle:
 			if cur in self.open2:
 				del self.open2[0]
 			self.open2.sort(key = lambda x: x.f_val, reverse = False)		# sort the array by f_value
-			if count <= 100 and len(self.open2) != 0:
+			if count <= 1000 and len(self.open2) != 0:
 				continue
 			else:
 				print("Sorry no solution found: ")
@@ -219,7 +219,7 @@ class puzzle:
 			if cur in self.open3:
 				del self.open3[0]
 			self.open3.sort(key = lambda x: x.f_val, reverse = False)			# sort the array by f_value
-			if count <= 100 and len(self.open3) != 0:
+			if count <= 1000 and len(self.open3) != 0:
 				continue
 			else:
 				print("\nSorry no solution found: ")
