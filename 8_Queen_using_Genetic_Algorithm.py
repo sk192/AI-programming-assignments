@@ -1,3 +1,6 @@
+# 8 queen problem using genetic algorithm. initial state: Place the queens in the columns on the board. Goal state: Queens on the board such that none are attacking.
+
+
 #!/usr/bin/python3
 import os, sys, random
 import copy
@@ -8,69 +11,42 @@ from collections import OrderedDict
 from operator import itemgetter  
 
 def fitness_function(population, queen_loc):
-	
-	
-	state_fitness_dict = {}
-	#print("queen_loc length, population len: %s%s" %(len(queen_loc),len(population)))
+	state_fitness_dict = []
 	for i in range(len(queen_loc)):
 		fitness = 0
 		flag = False
 		max_non_attacking_queens = 28
-		#while j < len(queen_loc[i]) - 1 and k < len(queen_loc[i]):
 		for j in range(len(queen_loc[i])-1):
 			for k in range(j+1, len(queen_loc[i])):
 				a = queen_loc[i][j]
 				b = queen_loc[i][k]
-				#print(a,b)
 				x1 = a[0]
 				y1 = a[1]
 				x2 = b[0]
 				y2 = b[1]
-				#print(x1,y1,x2,y2)
 				if (x1 == x2 and y1 != y2) or (x1 == y1 and x2 == y2) or (x1 != x2 and y1 == y2) or (x1 == y2 and x2 == y1) or (x1-1 == x2 and y1 + 1 == y2) or (abs(x1 - x2) == abs(y1 - y2)) or (x1 + 1 == x2 and y1 - 1 == y2):
 					fitness += 1
-				#print(fitness)
 		fit = max_non_attacking_queens - fitness
-		#print("i: %s" %(i))
-		# p = population[i]
-		# q = ''
-		# for x in population[i]:
-		# 	q = q + ''.join(str(x) )
-
-		state_fitness_dict[population[i]] = fit
-
+		state_fitness_dict.append((population[i],fit))
 	return state_fitness_dict
 
 def selection(fit):
-	S = sum(fit.values())
-	prob_selection = {}
+	S=0
+	for k in fit: 
+		S = S + k[1]
+	prob_selection = []
 	parent_selection = []
-	# for i in range(len(population)):
-	# 	partial_sum = random.randint(0,S)
-	# 	for key in fit:
-	# 		partial_sum = partial_sum + fit[key]
-	# 		if partial_sum < S:
-	# 			continue
-	# 		else:
-	# 			selection.append(key)
-	# 			break
 	previous_prob = 0.0
 	for key in fit:
-		previous_prob = previous_prob + (fit[key]/S)
-		#print("previous_prob: %s" %(previous_prob))
-		prob_selection[key] = previous_prob
-	OrderedDict(sorted(prob_selection.items(), key= lambda x : x[1]))
-	#print("------prob selection --------------: %s " %(prob_selection))
-		#print("prob_selection: %s" %(prob_selection))
-	#print("prob_selection: %s" %(prob_selection))
+		previous_prob = previous_prob + (key[1]/S)
+		prob_selection.append((key[0], previous_prob))
+	sorted(prob_selection, key= itemgetter(1))
 	for i in range(len(prob_selection)):
 		r = random.uniform(0,1)
-		#print("r: %s" %(r))
 		for j in prob_selection:
-			if r < prob_selection[j]:
-				parent_selection.append(j)
+			if r < j[1]:
+				parent_selection.append(j[0])
 				break
-	print("parent_selection, length: %s%s" %(parent_selection, len(parent_selection)))
 	return parent_selection
 
 
@@ -85,8 +61,6 @@ def crossover(p_sel):
 		B = p_sel[j]
 		C = A[:c+1] + B[c+1:]
 		D = B[:c+1] + A[c+1:]
-		#print("A: %s" %(A))
-		#print("B: %s" %(B))
 		crossover.append(C)
 		crossover.append(D)
 		i += 2
@@ -115,7 +89,7 @@ def process(population):
 	S= 0 
 	
 	
-	for i in range(10):
+	for i in range(400):
 		queen_loc = []
 		z = 0
 		k = 0
@@ -126,33 +100,24 @@ def process(population):
 				b.append(random.randint(1,8)) 
 			k += 1
 			states.append(b)
-		#print("states: %s" %(states))
-		#print("population: %s" %(population))
 		while z < len(population):
 			l = 0
 			q_l = []
 			while l < len(population[0]):
 				q_l.append((int(population[z][l]),states[z][l]))
 				l += 1
-			#print(q_l)
 			queen_loc.append(q_l)
-			#print(queen_loc)
 			z += 1
-		print("===========new_population=======%s" %(population))
-		print("Queen Location----------------%s" %(queen_loc))
 		fit = fitness_function(population, queen_loc)
-		print("fitness: %s" %(fit))
-		if 28 in fit.values():
-			print("---------------FOUND---------------")
-			for key,value in fit.items():
-				if value == 28:
-					return key
-		else: 
-			p_sel = selection(fit)
-			cross = crossover(p_sel)
-			new_population = mutation(cross)
-			print("new_population: %s" %(new_population))
-			population = new_population
+		for h in fit:
+			if 28 == h[1]:
+				print("---------------FOUND---------------")
+				return h[0]
+		
+		p_sel = selection(fit)
+		cross = crossover(p_sel)
+		new_population = mutation(cross)
+		population = new_population
 	print("Sorry could not find solution ")
 	return population
 		
@@ -169,9 +134,7 @@ if __name__ == '__main__':
 		a = []
 		for i in range(8):
 			a.append(random.randint(1,8)) 
-			#b.append(random.randint(1,8))
 		population.append(a)
-		#states.append(b)
 		k += 1
 	for i in range(len(population)):
 		p = population[i]
