@@ -1,4 +1,4 @@
-# 8 queen problem using genetic algorithm. initial state: Place the queens in the columns on the board. Goal state: Queens on the board such that none are attacking.
+# 8 queen problem using genetic algorithm. initial state: Place the queens from leftmost columns on the board. Goal state: Queens on the board such that none are attacking.
 
 
 #!/usr/bin/python3
@@ -72,7 +72,6 @@ def mutation(cross):
 	for i in range(len(cross)):
 		n = random.uniform(0,1)
 		if n < prob:
-			print("-------------------------------------Mutation happened-------------------------: %s" %n)
 			while True:
 				r1 = str(random.randint(1,8))
 				r2 = str(random.randint(1,8))
@@ -87,42 +86,30 @@ def mutation(cross):
 def process(population):
 
 	S= 0 
-	
-	
 	for i in range(400):
 		queen_loc = []
 		z = 0
-		k = 0
-		states =[]
-		while k < len(population):
-			b = [] 
-			for i in range(8):
-				b.append(random.randint(1,8)) 
-			k += 1
-			states.append(b)
 		while z < len(population):
 			l = 0
 			q_l = []
 			while l < len(population[0]):
-				q_l.append((int(population[z][l]),states[z][l]))
+				q_l.append((int(population[z][l]),l+1))
 				l += 1
 			queen_loc.append(q_l)
 			z += 1
 		fit = fitness_function(population, queen_loc)
 		for h in fit:
 			if 28 == h[1]:
-				print("---------------FOUND---------------")
+				print("---------------FOUND THE OUTPUT: The state of non attacking queens is:  ---------------")
 				return h[0]
 		
 		p_sel = selection(fit)
 		cross = crossover(p_sel)
 		new_population = mutation(cross)
 		population = new_population
-	print("Sorry could not find solution ")
-	return population
+	print("Sorry could not find solution...Try again ")
+	#return population
 		
-	
-
 if __name__ == '__main__':
 	n = int(input("Enter number of states in population: "))
 	
