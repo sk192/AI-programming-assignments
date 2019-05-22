@@ -1,4 +1,4 @@
-# 8 queen problem using genetic algorithm. initial state: Place the queens from leftmost columns on the board. Goal state: Queens on the board such that none are attacking.
+# 8 queen problem using genetic algorithm. initial state: Place the queens from leftmost columns on the board, one queen per column. Goal state: Queens on the board such that none are attacking.
 
 
 #!/usr/bin/python3
@@ -85,7 +85,7 @@ def mutation(cross):									# Mutation will happen if n < prob.
 	return cross
 
 def process(population):
-
+	ar =[]
 	S= 0 
 	count = 0
 	avg_fitness = []
@@ -94,13 +94,14 @@ def process(population):
 		generation_population.append(i+1)
 		count += 1
 		queen_loc = []
+		#print("population : %s" %(population))
 		z = 0
 		while z < len(population):
 			l = 0
 			q_l = []
 			while l < len(population[0]):					# this loop will create the 2-D queen loaction to calulate the fitness function.
-				q_l.append((int(population[z][l]),l+1))
-				l += 1
+				q_l.append((int(population[z][l]),l+1))     # queen location is like (row, column). Suppose state in population is '13246587', 
+				l += 1										# then the representation will be (1,1),(3,2),(2,3),(4,4),(6,5),(5,6),(8,7),(7,8).
 			queen_loc.append(q_l)				
 			z += 1
 		fit = fitness_function(population, queen_loc)
@@ -109,10 +110,10 @@ def process(population):
 			sum1 = sum1 + fit[i][1]
 		avg = sum1 / len(fit)
 		avg_fitness.append(avg)
-		print("----------Avg: %s" %(avg))  
+		#print("----------Avg: %s" %(avg))  
 		for h in fit:
 			if 28 == h[1]:				
-				print("---------------FOUND THE OUTPUT: The state of non attacking queens is:  ---------------")
+				print("---------------FOUND THE OUTPUT------------")
 				plt.title("Size_of_population = {%s}, Solved_in_genereation = {%s}" %(len(population),count))     # code to draw the graph
 				plt.plot(generation_population, avg_fitness)
 				plt.ylabel("Average fitness per geneartion ")
@@ -122,8 +123,12 @@ def process(population):
 				plt.ylim(0,28)
 				plt.tight_layout()
 				plt.show()
-				print("count: %s" %(count))
-				return h[0]
+				print("Found at generation: %s" %(count))
+				#return  h[0]
+				ar.append(h[0])
+		if len(ar) != 0:
+			print("The state of non attacking queens is: ")
+			return ar
 		
 		p_sel = selection(fit)
 		cross = crossover(p_sel)
@@ -140,8 +145,7 @@ def process(population):
 	plt.tight_layout()
 	plt.show()
 
-	
-	#return population
+	return None
 		
 if __name__ == '__main__':
 	n = int(input("Enter number of states in population (population size): "))
